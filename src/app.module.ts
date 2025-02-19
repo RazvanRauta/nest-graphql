@@ -2,7 +2,7 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MikroORM, SqliteDriver } from '@mikro-orm/sqlite';
+import { DataloaderType, MikroORM, SqliteDriver } from '@mikro-orm/sqlite';
 
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { RecipesModule } from './recipes/recipes.module';
@@ -18,6 +18,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
       dbName: 'recipes.sqlite3',
       driver: SqliteDriver,
       debug: true,
+      dataloader: DataloaderType.ALL,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -4,13 +4,26 @@
 
 directive @upper on FIELD_DEFINITION
 
+"""author"""
+type Author {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  name: String!
+  email: String!
+  born: Date
+  recipes: [Recipe!]!
+}
+
 """recipe"""
 type Recipe {
   id: ID!
+  createdAt: Date!
+  updatedAt: Date!
   title: String!
   description: String
-  creationDate: Date!
   ingredients: [String!]!
+  author: Author!
 }
 
 """Date custom scalar type"""

@@ -47,6 +47,9 @@ importers:
       graphql:
         specifier: ^16.10.0
         version: 16.10.0
+      graphql-fields-list:
+        specifier: ^2.3.0
+        version: 2.3.0
       graphql-query-complexity:
         specifier: ^1.0.0
         version: 1.0.0(graphql@16.10.0)
@@ -2601,6 +2604,9 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
+
+  graphql-fields-list@2.3.0:
+    resolution: {integrity: sha512-psnXCYTjZH46FAvIw0MelMwQg1IFI2uEl8rYAGXxTjFPLxd1UW0W5eaQb4kuNBh7Hh4FzQQ+I/TYtjLIPtXI1A==}
 
   graphql-query-complexity@1.0.0:
     resolution: {integrity: sha512-Tj7mRIuKWjGomPaRW5E+ztY8bhYPf1v/7bkDPuzksrR3GqHeIS5jxzX8CfimlV3g9z0lT20RG9JgaUUjhRjtOA==}
@@ -7318,6 +7324,8 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphemer@1.4.0: {}
+
+  graphql-fields-list@2.3.0: {}
 
   graphql-query-complexity@1.0.0(graphql@16.10.0):
     dependencies:

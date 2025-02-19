@@ -1,10 +1,18 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import {
+  Args,
+  Info,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { RecipesArgs } from './dto/recipes.args';
-import { Recipe } from './models/recipe.model';
 import { RecipesService } from './recipes.service';
 import { NewRecipeInput } from './dto/new-recipe.input';
+import { GraphQLResolveInfo } from 'graphql';
+import { Recipe } from './entities/recipe.entity';
 
 const pubSub = new PubSub();
 
@@ -13,8 +21,11 @@ export class RecipesResolver {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Query(() => Recipe)
-  async recipe(@Args('id') id: string): Promise<Recipe> {
-    const recipe = await this.recipesService.findOneById(id);
+  async recipe(
+    @Args('id') id: string,
+    @Info() info: GraphQLResolveInfo,
+  ): Promise<Recipe> {
+    const recipe = await this.recipesService.findOneById(id, info);
     if (!recipe) {
       throw new NotFoundException(id);
     }
@@ -22,8 +33,11 @@ export class RecipesResolver {
   }
 
   @Query(() => [Recipe])
-  recipes(@Args() recipesArgs: RecipesArgs): Promise<Recipe[]> {
-    return this.recipesService.findAll(recipesArgs);
+  recipes(
+    @Args() recipesArgs: RecipesArgs,
+    @Info() info: GraphQLResolveInfo,
+  ): Promise<Recipe[]> {
+    return this.recipesService.findAll(recipesArgs, info);
   }
 
   @Mutation(() => Recipe)

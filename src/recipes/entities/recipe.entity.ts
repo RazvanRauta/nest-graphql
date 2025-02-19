@@ -1,34 +1,31 @@
-import { ArrayType, Entity, PrimaryKey, Property } from '@mikro-orm/sqlite';
-import { v4 } from 'uuid';
+import { ArrayType, Entity, ManyToOne, Property, Ref } from '@mikro-orm/sqlite';
+import { Directive, Field, ObjectType } from '@nestjs/graphql';
 
+import { BaseEntity } from '../../common/entities/entity.base';
+import { Author } from '../../authors/entities/author.entity';
+import { NewRecipeInput } from '../dto/new-recipe.input';
+
+@ObjectType({ description: 'recipe' })
 @Entity()
-export class Recipe {
-  @PrimaryKey({ type: 'uuid' })
-  id: string = v4();
-
+export class Recipe extends BaseEntity {
+  @Directive('@upper')
+  @Field()
   @Property()
   title: string;
 
+  @Field({ nullable: true })
   @Property({ nullable: true })
   description?: string;
 
-  @Property()
-  creationDate: Date = new Date();
-
+  @Field(() => [String])
   @Property({ type: ArrayType })
   ingredients: string[];
 
-  constructor({
-    title,
-    ingredients,
-    description,
-  }: {
-    title: string;
-    ingredients: string[];
-    description?: string;
-  }) {
-    this.title = title;
-    this.ingredients = ingredients;
-    this.description = description;
+  @Field(() => Author)
+  @ManyToOne(() => Author, { ref: true })
+  author: Ref<Author>;
+
+  constructor(body: NewRecipeInput) {
+    super(body);
   }
 }
